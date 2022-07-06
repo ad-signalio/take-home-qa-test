@@ -1,0 +1,42 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb' # schema is auto formatted, let's not mess with it
+    - 'db/**/**'
+    - "tmp/**/*"
+    - "bin/bundle"
+    - "bin/spring"
+    - "bin/rails"
+    - "bin/rake"
+    - "bin/rspec"
+    - "bin/update"
+    - "bin/setup"
+    - "bin/yarn"
+    - "node_modules/**/*"
+    - "log/**/*"
+    - "vendor/**/*"
+    - "Gemfile"
+
+
+Layout/LineLength:
+  Exclude:
+    - 'config/initializers/simple_form*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/initializers/simple_form*'
+    - 'spec/**/**'
+
+Style/Documentation:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - 'spec/features/**/**'
+
+RSpec/ExampleLength:
+  Max: 20

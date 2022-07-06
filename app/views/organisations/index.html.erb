@@ -1,0 +1,27 @@
+<% provide :page_title do %>
+  Organisations
+<% end %>
+
+<% provide :page_cta do %>
+  <%= link_to 'New Organisation', new_organisation_path, class: 'btn btn-primary' %>
+<% end %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @organisations.each do |organisation| %>
+      <tr data-test-id="organisation_<%= organisation.id %>_row">
+        <td><%= organisation.name %></td>
+        <td><%= link_to 'Show', organisation %></td>
+        <td><%= link_to 'Edit', edit_organisation_path(organisation) %></td>
+        <td><%= link_to 'Destroy', organisation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

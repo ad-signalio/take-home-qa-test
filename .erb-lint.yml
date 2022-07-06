@@ -1,0 +1,6 @@
+---
+EnableDefaultLinters: true
+exclude:
+  - '**/vendor/**/*'
+  - '**/node_modules/**/*'
+  - '**/lib/templates/erb/*'

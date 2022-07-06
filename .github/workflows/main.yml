@@ -1,0 +1,20 @@
+name: Lint & Test
+on:
+  - push
+
+jobs:
+  lint_ruby:
+    name: Lint Ruby 🚨
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+      - name: Install Ruby 💎
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true
+      - name: Lint Ruby 🚨
+        run: bin/bundle exec rubocop -P
+      - name: Lint ERB 📜
+        run: bin/bundle exec erblint --lint-all

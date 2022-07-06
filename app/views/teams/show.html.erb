@@ -1,0 +1,13 @@
+<% provide :page_title do %>
+  <%= @team.name %>
+<% end %>
+
+<% provide :page_cta do %>
+  <%= link_to 'Edit Team', edit_organisation_team_path(@organisation, @team), class: 'btn btn-primary' %>
+<% end %>
+
+<div class="row">
+  <div class="col-12">
+    <h2>Users</h2>
+  </div>
+<div>

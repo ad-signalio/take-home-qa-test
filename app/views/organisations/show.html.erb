@@ -1,0 +1,19 @@
+<% provide :page_title do %>
+  <%= @organisation.name %>
+<% end %>
+
+<% provide :page_cta do %>
+  <%= link_to 'Edit Organisation', edit_organisation_path(@organisation), class: 'btn btn-primary' %>
+<% end %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="row mb-3">
+      <div class="col-6"><h2>Teams</h2></div>
+      <div class="col-6 d-flex text-end align-items-center">
+        <div class="w-100"><%= link_to 'New Team', new_organisation_team_path(@organisation), class: 'btn btn-success' %></div>
+      </div>
+    </div>
+    <%= render 'teams/teams_list', organisation: @organisation, teams: @organisation.teams %>
+  </div>
+<div>

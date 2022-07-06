@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: take_home_test_development
+
+test:
+  <<: *default
+  database: take_home_test_test
+
+production:
+  <<: *default
+  database: take_home_test_production
+  username: take_home_test
+  password: <%= ENV['TAKE_HOME_TEST_DATABASE_PASSWORD'] %>
