@@ -1,131 +1,124 @@
-# Ad Signal tech test
+# Ad Signal UX test
 
-For this test, we'd like you to spend a couple hours improving a toy contact
-management app we created.
+For this test, we'd like you to review a pull request a developer has created.
 
-Ensure that you can run the app on your system and acquaint yourself with it
-before implementing the user stories below.
+# Set up the system
 
-To submit your test, please open a Pull Request (or more) for us to review.
+## ⚡️ System Dependencies
 
-# Non-functional requirements
+This project expects you to have the following available on your system:
 
-## Documentation and Git usage
+* [Ruby](https://www.ruby-lang.org/)
+* [Node.js 14](https://nodejs.org/download/release/latest-v14.x/)
+* [Docker](https://www.docker.com/products/docker-desktop)
 
-Please ensure that your Git history is tidy - we would like to review your Pull
-Requests commit by commit. Feel free to use commit messages to document any
-design decisions you make and/or use the Pull Request to provide clarifications
-you feel are warranted, whether they are technical or design-related or
-anything else.
+Along with Ruby, the following are required to maintain application
+dependencies:
 
-## Tests
+* [Bundler](https://bundler.io/)
+* [Yarn](https://yarnpkg.com/)
 
-As an engineering team, we want to ensure that our codebases have good test
-coverage so that we have robust and error-free applications.
+## 🎲 Installation
 
-We use RSpec (which is already in the codebase now), and would love to carry on
-using it here. If you prefer to use minitest or any other framework, feel free
-to make that switch and let us know why you prefer. 
+Once you have set up the dependencies, follow these steps:
 
-Feel free to add any other supporting gems to rspec which will support you
-further in testing if needed.
+```sh
+# Install bundler and yarn if you don't have them...
+gem install bundler
+npm install -g yarn
 
-# User stories
+# Clone the project
+git clone git@github.com:ad-signalio/take-home-qa-test.git
+cd take-home-qa-test
+```
 
-## Story 1
+Obtain the application dependencies using bundler
 
-As part of the requirements for our application, we need to facilitate a
-collection of contacts where contacts can be assigned to teams.
+```sh
+bin/bundle install
+bin/yarn install
+```
 
-As a user, I want to add contacts to a team and see the existing contacts of a
-team.
+Create and setup the database and start mailcatcher:
 
-### AC
+```sh
+docker-compose up
+bin/bundle exec rails db:prepare
+```
 
-- Contacts are described as follows
-    * first_name (required, 255 characters)
-    * middle_name (255 characters)
-    * last_name (required, 255 characters)
-    
-    (Either or both of the following are required:)
+This will start Mailcatcher at http://localhost:1080/, which you can use to
+intercept and inspect the emails sent by the application.
 
-    * email (unique (case insensitive) and must validate as an email address)
-    * phone_number (starts with the UK country code (+44 or 0044) then 11 digits)
+It will also start a PostgreSQL server, set up the database and generate a test
+user with the following credentials:
 
-- The list / table of contacts should live in the team show page with columns
-  for contact full name, email and options/links to show, edit and destroy a
-  contact.
+- email: test-user@test.co.uk
+- password = 123Password!
+- first_name: Test
+- last_name: User
 
-- Team show must have a button/link to navigate to create new contact within
-  that team.
+### 🐳 Using Docker
 
-- Contact form must include an input for all the columns.
+Docker takes care of running the postgresql and mailcatcher services required
+for the application to function.
 
-- The designs for the list/table view, show page and contact form should follow
-  similar patterns used for organisation and teams.
+## Getting up and running
 
-- Contact show page must include all relevant details of the user.
+After starting docker, we need to start the rails server locally.
 
-- There is a breadcrumb trail on all the page described above, allowing me to
-  navigate quickly through the hierarchy.
+```sh
+bin/bundle exec rails server
+```
 
-## Story 2
+# Test
 
-As a user I want to copy a contact's email to my clipboard, so that I can
-efficiently copy the relevant information on this page.
+This test incorporates a create account feature where the user is able to create
+an account using their email address. There is a dummy story with acceptance
+criteria.
 
-### AC
+As part of this test, we would like you to take a look at this feature that has
+been in.
 
-- There is an icon link next to the email on contact show page for copying
-  email to clipboard.
+As part of the QA test, we would like you to have a look at the acceptance
+criteria and come up with some additional acceptance criteria that you think
+would be needed.
 
-- Clicking on the icon link will copy the email to my clipboard and display
-  some feedback to the user on the page that the email has been copied.
+Test the feature and try to catch bugs and write a bug report as you would to
+raise the issue.
 
-## Story 3
+Finally take a look at the automated test to highlight what are missing and what
+you feel should be added.
 
-As a user, when I add a Contact to a team or more, at the end of the day I want
-to notify them, through their available contact options, that they are now part
-of more teams.
+# User story
 
-⚠️ _To ensure actual people are not notified in error, please use null or fake
-mailers/texters for this story. We are happy for you to only test that the
-interfaces are called correctly._ ⚠️
+## User self registration
 
-### AC
+**As A New user**
+**I want to be able to signup as a user**
+**So I can log in**
 
-- Only notify Contacts that were indeed added to any team(s) that day.
-- All eligible Contacts are to be notified on a fixed schedule of your
-  choosing.
-- If the Contact has a phone number, use it to send a text notification.
-- If the Contact has an email address, use it to send an email notification.
-- The text notification says "You've been added to %{count} teams".
-- The email notification lists the names of all the teams they were added on
-  the preceding day only.
+### Acceptance Criteria
 
-# Optional stories
+- User is displayed with the Create Account button
+- Selecting the create account button takes the user to Page 1 of self-registration
 
-## Optional story 1
+#### Page 1:
 
-As a platform engineer, I want to add docker and compose file to allow a user
-to run the application inside a containerised environment and a helm file that
-would allow the application to be run on a Kubernetes cluster.
+- User is displayed with a first name field (255 characters, presence required)
+- User is displayed with the last name field (255 characters, presence required)
+- The email address field must be in a valid format. (use Devise's built-in email
+  regex)
+- The email address must be unique
+- The password must be at least 8 characters
+- The user must confirm their password
+- The user gets a confirmation email
 
-### AC
+#### Page 2:
 
-- Add a Docker and compose file that allows a user to run the application
-  inside a containerised environment
+- User is displayed with Job title field (255 characters, optional)
+- User is displayed with Phone number field (15 characters, format:[0-9+\s] number
+  "+" and space, optional)
+- User is displayed with Organisation name (255 characters, presence required)
+- User must agree to T&Cs
+- Users can opt to receive newsletters and marketing updates.
 
-- Add a Helm file that would allow the application to be run on a Kubernetes
-  cluster
-
-## Optional story 2
-
-As engineering team we want our tests to run on Github Actions so that we can
-feel confident that we don't have any tests failing with new features and pull
-requests.
-
-### AC
-
-- Have our RSpec test running as a job on our Github actions main workflow
-  right after lint passes.
