@@ -7,6 +7,12 @@ Rails.application.routes.draw do
                registrations: 'users/registrations'
              }
 
+  devise_scope :user do
+    post 'users/sign_up', to: 'users/registrations#create'
+    get 'users/registrations/complete/:id', to: 'users/registrations#details', as: :complete_user_registration
+    put 'users/registrations/complete/:id', to: 'users/registrations#complete'
+  end
+
   root to: 'organisations#index'
 
   resources :organisations do

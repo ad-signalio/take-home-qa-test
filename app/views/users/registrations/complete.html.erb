@@ -1,0 +1,33 @@
+<% provide :page_title do %>
+  Complete registration
+<% end %>
+
+<%= simple_form_for(resource,
+                    as: resource_name, url: complete_user_registration_path(resource),
+                    html: { method: :put }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :job_title,
+                required: false,
+                autofocus: true %>
+    <%= f.input :phone_number,
+                required: false,
+                autofocus: true %>
+    <%= f.input :organisation_id,
+                required: true,
+                collection: Organisation.all,
+                autofocus: true %>
+    <%= f.input :accepted_terms_and_conditions,
+                label: 'I agree to the Terms and Conditions',
+                required: true %>
+    <%= f.input :agreed_to_receive_updates_newsletters_and_marketing,
+                label: 'I agree to receive general updates, newsletters and marketing' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Complete" %>
+  </div>
+<% end %>
+
+<%= render "users/shared/links" %>
