@@ -1,0 +1,4 @@
+<% if user_signed_in? %>
+  <%= button_to "Log out #{current_user.email}", destroy_user_session_path, class: 'btn btn-danger',
+      form_class: 'col-12 col-lg-6 text-lg-end', method: :delete, data: { turbo: false } %>
+<% end %>

@@ -21,14 +21,16 @@ AllCops:
     - "vendor/**/*"
     - "Gemfile"
 
-
 Layout/LineLength:
   Exclude:
     - 'config/initializers/simple_form*'
+    - 'config/initializers/devise.rb'
 
 Metrics/BlockLength:
   Exclude:
     - 'config/initializers/simple_form*'
+    - 'config/environments/development.rb'
+    - 'config/environments/production.rb'
     - 'spec/**/**'
 
 Style/Documentation:

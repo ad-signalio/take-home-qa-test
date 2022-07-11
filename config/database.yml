@@ -7,14 +7,12 @@ default: &default
 
 development:
   <<: *default
-  database: take_home_test_development
+  url: postgres://development:development@localhost:5432/take_home_test_development
 
 test:
   <<: *default
-  database: take_home_test_test
+  url: postgres://development:development@localhost:5432/take_home_test_test
 
 production:
   <<: *default
-  database: take_home_test_production
-  username: take_home_test
-  password: <%= ENV['TAKE_HOME_TEST_DATABASE_PASSWORD'] %>
+  url: <%= ENV.fetch("DATABASE_URL") %>
