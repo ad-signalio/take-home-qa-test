@@ -36,6 +36,10 @@ Metrics/BlockLength:
 Style/Documentation:
   Enabled: false
 
+Rails/LexicallyScopedActionFilter:
+  Exclude:
+    - 'app/controllers/users/registrations_controller.rb'
+
 RSpec/MultipleExpectations:
   Exclude:
     - 'spec/features/**/**'
